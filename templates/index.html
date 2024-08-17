@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <title>Movie Recommender</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script>
+        $(document).ready(function() {
+            $("select[name='search_type']").change(function() {
+                var searchType = $(this).val();
+                if (searchType === 'Production Date') {
+                    $("input[name='query']").datepicker({
+                        dateFormat: "yy-mm-dd"
+                    }).show().focus();
+                } else {
+                    $("input[name='query']").datepicker("destroy").show().focus();
+                }
+            });
+
+            $("#loginSignupBox").fadeIn();
+        });
+
+        function openProfile() {
+            document.getElementById('profileModal').style.display = 'block';
+        }
+
+        function closeProfile() {
+            document.getElementById('profileModal').style.display = 'none';
+        }
+    </script>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <a href="/">FlickFinds</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="landing-page">
+            <h1>Welcome to FlickFinds</h1>
+            <p>Discover the best movies tailored to your taste...</p>
+        </div>
+
+        <div class="search-container">
+            <form action="/search" method="get">
+                <select name="search_type">
+                    <option value="Genre">Genre</option>
+                    <option value="Director">Director</option>
+                    <option value="Rating">Rating</option>
+                    <option value="Production Date">Production Date</option>
+                </select>
+                <input type="text" name="query" placeholder="Type your search...">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+        
+        <div class="genres">
+            <h2>Major Genres</h2>
+            <ul>
+                {% for genre in genres[:5] %}
+                    <li>
+                        <a href="{{ url_for('genre_movies', genre_name=genre) }}">{{ genre }}</a>
+                        <img src="{{ url_for('static', filename='images/' + genre.lower() + '.jfif') }}" alt="{{ genre }}">
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div> <!-- Closing .container div -->
+
+    <!-- Footer should be placed outside the container -->
+    <footer>
+        <p>&copy; 2024 FlickFinds. All rights reserved.</a></p>
+    </footer>
+    
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <title>Movie Recommendations</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <a href="/">FlickFinds</a>
+        </div>
+        
+    </nav>
+    
+        
+    </nav>
+    
+    <div class="container">
+        <h2>Movie Recommendations</h2>
+        <div class="movie-list">
+            {% for movie in movies %}
+                <div class="movie-item">
+                    <p><strong>Movie Title:</strong> {{ movie['movie_title'] | default('Title Missing') }}</p> <!-- Debugging Default Text -->
+                    <p><strong>Director:</strong> {{ movie['director_name'] }}</p>
+                    <p><strong>Rating:</strong> {{ movie['movie_averageRating'] }}</p>
+                    <p><strong>Production Date:</strong> {{ movie['production_date'].strftime('%Y-%m-%d') }}</p>
+                    <p><strong>Genres:</strong> {{ movie['genres'] | join(', ') }}</p>
+                </div>
+            {% endfor %}
+        </div>
+        
+        <div class="pagination">
+            {% if current_page > 1 %}
+                <a href="{{ url_for(request.endpoint, genre_name=genre_name, page=current_page-1) }}">&laquo; Previous</a>
+            {% endif %}
+            
+            {% for page in range(1, total_pages + 1) %}
+                {% if page == current_page %}
+                    <span class="current">{{ page }}</span>
+                {% else %}
+                    <a href="{{ url_for(request.endpoint, genre_name=genre_name, page=page) }}">{{ page }}</a>
+                {% endif %}
+            {% endfor %}
+            
+            {% if current_page < total_pages %}
+                <a href="{{ url_for(request.endpoint, genre_name=genre_name, page=current_page+1) }}">Next &raquo;</a>
+            {% endif %}
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 FlickFinds. All rights reserved. | <a href="/learn">Learn More</a></p>
+    </footer>
+    
+</body>
+</html>

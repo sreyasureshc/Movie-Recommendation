@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <title>Movie Recommender</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+    <div class="landing-container">
+        <h1>Get curated show and movie recommendations</h1>
+        <div class="buttons">
+            <a href="/index" class="btn">Get recommendations</a>
+        </div>
+    </div>
+    <div id="loading" style="display:none;">Loading...</div>
+    <script>
+        $(document).ready(function() {
+            $('form').on('submit', function() {
+                $('#loading').show();
+            });
+        });
+    </script>
+</body>
+</html>

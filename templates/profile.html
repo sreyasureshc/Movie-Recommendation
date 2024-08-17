@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='logo-color.png') }}" alt="Logo">
+            <a href="/">Home</a>
+        </div>
+        <div>
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
+    <div class="container">
+        {% if user %}
+            <h2>Profile</h2>
+            <p><strong>Username:</strong> {{ user['username'] }}</p>
+            <p><strong>Email:</strong> {{ user['email'] }}</p>
+            <p><strong>First Name:</strong> {{ user['first_name'] }}</p>
+            <p><strong>Last Name:</strong> {{ user['last_name'] }}</p>
+            <p><strong>Birthdate:</strong> {{ user['birthdate'] }}</p>
+            <p><strong>Country:</strong> {{ user['country'] }}</p>
+        {% else %}
+            <p>Please log in to view your profile.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
